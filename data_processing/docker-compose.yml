@@ -1,0 +1,6 @@
+version: "3.9"
+services:
+  processing_module:
+    build:
+      context: ../
+      dockerfile: data_processing/processing_module/Dockerfile
