@@ -1,10 +1,12 @@
+import os
 import faust
 from data_model import Signal
 from shared_functions.resampling import resample
 
 print("DEBUG Starting processing module...")
 
-app = faust.App('processing', broker='kafka://kafka:9092')
+
+app = faust.App('processing', broker=f"kafka://{os.environ['KAFKA_BOOTSTRAP_URL']}")
 input_topic = app.topic('input', key_type=str, value_type=Signal)
 
 
