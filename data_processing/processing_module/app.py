@@ -29,7 +29,7 @@ def window_processor(key, signals):
     values = [signal.value for signal in signals]
     result = mean(values)
 
-    logging.debug(f"Aggregation result: {sensor_id}:{result}, ts:{ts}")
+    logging.info(f"Aggregation result: {sensor_id}:{result}, ts:{ts}")
     output_topic.send_soon(key=sensor_id, value=Signal(ts=ts, sensor_id=sensor_id, value=result))
 
 
@@ -42,7 +42,7 @@ signals_table = (app.Table("signals", default=list, on_window_close=window_proce
 @app.agent(input_topic)
 async def process(stream):
     async for signal in stream.group_by(Signal.sensor_id):
-        logging.debug(f"Received signal: {signal}")
+        logging.info(f"Received signal: {signal}")
 
 
 @app.agent(input_topic)

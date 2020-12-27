@@ -28,7 +28,7 @@ services:
       context: ../
       dockerfile: data_processing/processing_module/Dockerfile
     environment:
-      - LOG_LEVEL=DEBUG
+      - LOG_LEVEL=INFO
       - KAFKA_BOOTSTRAP_NODES=kafka:9092
       - INPUT_TOPIC_NAME=raw_signals
       - OUTPUT_TOPIC_NAME=resampled_signals
