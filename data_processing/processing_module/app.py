@@ -40,17 +40,12 @@ signals_table = (app.Table("signals", default=list, on_window_close=window_proce
 
 
 @app.agent(input_topic)
-async def process(stream):
+async def collect_signals(stream):
     async for signal in stream.group_by(Signal.sensor_id):
         logging.info(f"Received signal: {signal}")
-
-
-@app.agent(input_topic)
-async def collect_signals(stream):
-    async for s in stream.group_by(Signal.sensor_id):
-        value_list = signals_table[s.sensor_id].value()
-        value_list.append(s)
-        signals_table[s.sensor_id] = value_list
+        value_list = signals_table[signal.sensor_id].value()
+        value_list.append(signal)
+        signals_table[signal.sensor_id] = value_list
 
 
 if __name__ == '__main__':
