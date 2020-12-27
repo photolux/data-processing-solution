@@ -6,9 +6,10 @@ from shared_functions.resampling import mean
 
 import random
 
-INPUT_TOPIC_NAME = "input"
-OUTPUT_TOPIC_NAME = "output"
-WINDOW_SIZE = 5  # seconds
+INPUT_TOPIC_NAME = os.environ["INPUT_TOPIC_NAME"]
+OUTPUT_TOPIC_NAME = os.environ["OUTPUT_TOPIC_NAME"]
+WINDOW_SIZE = int(os.environ["WINDOW_SIZE"])  # seconds
+WINDOW_TTL = 10  # seconds
 
 app = faust.App('processing', broker=f"kafka://{os.environ['KAFKA_BOOTSTRAP_NODES']}", topic_partitions=1)
 
@@ -28,7 +29,7 @@ def window_processor(key, signals):
 
 
 signals_table = (app.Table("signals", default=list, on_window_close=window_processor, partitions=1)
-                 .tumbling(WINDOW_SIZE, expires=timedelta(seconds=10))
+                 .tumbling(timedelta(seconds=WINDOW_SIZE), expires=timedelta(seconds=WINDOW_TTL))
                  #.relative_to_field(Signal.ts)
                  )
 

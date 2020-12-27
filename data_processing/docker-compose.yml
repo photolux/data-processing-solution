@@ -29,5 +29,8 @@ services:
       dockerfile: data_processing/processing_module/Dockerfile
     environment:
       - KAFKA_BOOTSTRAP_NODES=kafka:9092
+      - INPUT_TOPIC_NAME=raw_signals
+      - OUTPUT_TOPIC_NAME=resampled_signals
+      - WINDOW_SIZE=2  # in seconds
     depends_on:
       - kafka
