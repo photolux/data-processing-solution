@@ -8,7 +8,6 @@ import faust
 from data_model import Signal
 from shared_functions.resampling import mean
 
-import random
 
 INPUT_TOPIC_NAME = os.environ["INPUT_TOPIC_NAME"]
 OUTPUT_TOPIC_NAME = os.environ["OUTPUT_TOPIC_NAME"]
@@ -53,29 +52,6 @@ async def collect_signals(stream):
         value_list.append(s)
         signals_table[s.sensor_id] = value_list
 
-
-# @app.timer(1)
-# async def produce():
-#     sensor_id = "test_sensor"
-#     await input_topic.send(
-#         key=sensor_id,
-#         value=Signal(
-#             ts=datetime.now(),
-#             sensor_id=sensor_id,
-#             value=89)
-#     )
-
-
-@app.timer(1)
-async def produce():
-    sensor_id = "another_sensor"
-    await input_topic.send(
-        key=sensor_id,
-        value=Signal(
-            ts=datetime.now(),
-            sensor_id=sensor_id,
-            value=1024 + random.random())
-    )
 
 if __name__ == '__main__':
     app.main()
