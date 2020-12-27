@@ -1,8 +1,9 @@
+from datetime import datetime
 from faust import Record
 
 
-class Signal(Record, serializer='json'):
-    timestamp: int
+class Signal(Record):
+    ts: datetime
     sensor_id: str
     value: float
 

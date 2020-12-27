@@ -28,6 +28,6 @@ services:
       context: ../
       dockerfile: data_processing/processing_module/Dockerfile
     environment:
-      - KAFKA_BOOTSTRAP_URL=kafka:9092
+      - KAFKA_BOOTSTRAP_NODES=kafka:9092
     depends_on:
       - kafka

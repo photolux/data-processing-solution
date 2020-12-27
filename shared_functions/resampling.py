@@ -1,3 +1,7 @@
-def resample():
-    print(f"DEBUG resampling")
-    pass
+from typing import List
+
+
+def mean(values: List[float]):
+    count = len(values)
+    result = sum(values) / count
+    return result
